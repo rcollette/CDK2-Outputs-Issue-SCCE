@@ -23,6 +23,7 @@
       "./node_modules/@types"
     ]
   },
+  "compileOnSave": false,
   "exclude": [
     "node_modules",
     "cdk.out"
