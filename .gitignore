@@ -1,8 +1,8 @@
 #Would be nice if some of these were added by cdk init
 cdk.out
 node_modules
+cdk.context.json
 
 #WebStorm
 .idea
-
 
