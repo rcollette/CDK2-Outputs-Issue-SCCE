@@ -7,17 +7,21 @@ export interface IFargateStackProps extends IFargateStackBaseProps {
 }
 
 export class FargateStack extends FargateStackBase<IFargateStackProps> {
+
   constructor(scope: Construct, id: string, private fargateStackProps: IFargateStackProps) {
     super(scope, id, fargateStackProps);
-    this._setSignerEnvironmentVariables();
   }
 
-  private _setSignerEnvironmentVariables(): void {
-    this.fargateStackProps.environment[
+  protected _augmentStackProps(props: IFargateStackProps) {
+    super._augmentStackProps(props);
+    const environment = props.environment;
+    environment[
       "DeliveriesBucketConfiguration__SignerAccessKey"
-      ] = this.fargateStackProps.signerAccessKey.ref;
-    this.fargateStackProps.environment[
+      ] = props.signerAccessKey.ref;
+    environment[
       "DeliveriesBucketConfiguration__SignerSecretAccessKey"
-      ] = this.fargateStackProps.signerAccessKey.attrSecretAccessKey;
+      ] = props.signerAccessKey.attrSecretAccessKey;
+    return props;
   }
+
 }

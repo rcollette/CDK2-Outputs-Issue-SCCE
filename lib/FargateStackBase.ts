@@ -4,7 +4,7 @@ import { Cluster, ContainerImage, ScalableTaskCount } from "aws-cdk-lib/aws-ecs"
 import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";
 import { Vpc } from "aws-cdk-lib/aws-ec2";
 
-export interface IFargateStackBaseProps extends StackProps{
+export interface IFargateStackBaseProps extends StackProps {
   /**
    * The environment variable values that will be set for the service.
    */
@@ -23,9 +23,13 @@ export class FargateStackBase<T extends IFargateStackBaseProps> extends Stack {
     private _parameterStackBaseProps: T
   ) {
     super(scope, id, _parameterStackBaseProps);
+    this._augmentStackProps(_parameterStackBaseProps);
     this._createVpc();
     this._createCluster();
     this._createService();
+  }
+
+  protected _augmentStackProps(props: T): void {
   }
 
   private _createVpc() {
@@ -58,6 +62,5 @@ export class FargateStackBase<T extends IFargateStackBaseProps> extends Stack {
       minCapacity: 1,
       maxCapacity: 1,
     });
-
   }
 }
